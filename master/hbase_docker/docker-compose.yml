@@ -1,0 +1,11 @@
+services:
+    build: .
+    ports:
+      - "9095:9092"
+    volumes:
+      - .:/code
+    image: dajobe/hbase
+  networks:
+    - testNet
+
+

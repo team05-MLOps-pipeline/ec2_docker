@@ -1,0 +1,18 @@
+version:  '3.8'
+services:
+  app:
+      build: .
+      restart: unless-stopped
+      hostname: flask
+      networks:
+        - testNet
+      ports:
+        - 5000:5000
+            
+
+  
+networks:
+  testNet:
+    external: true
+
+

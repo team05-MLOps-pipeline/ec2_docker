@@ -1,0 +1,14 @@
+version:  '3.8'
+services:
+  duckdns:
+      image: linuxserver/duckdns:latest
+      container_name: Duckdns
+      restart: unless-stopped
+      volumes:
+        - config:/config
+      environment:
+        - TZ=Asia/Seoul
+        - SUBDOMAINS=
+        - TOKEN=        
+volumes:
+  config:

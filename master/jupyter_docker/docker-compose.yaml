@@ -1,0 +1,32 @@
+version:  '3.8'
+services:
+    app:
+      image: jupyter/base-notebook:latest
+      restart: unless-stopped
+      user: root
+      #shm_size: 16gb
+      networks:
+        - testNet
+      volumes:
+        - data:/home/jovyan/work
+      environment:
+        GRANT_SUDO: "yes"
+      #  JUPYTER_ENABLE_LAB: "yes"
+        NB_UID: 1000
+        NB_GID: 100
+      ports:
+        - 9005:8888
+      command: "start-notebook.sh \
+        --LabApp.token=12341234!"
+      #deploy:
+      #  resources:
+      #    limits:
+      #      memory: 20G
+       
+networks:
+  testNet:
+    external: true
+
+volumes:
+  data:
+

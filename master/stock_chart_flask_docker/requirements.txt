@@ -1,0 +1,13 @@
+yfinance==0.2.31
+plotly==5.18.0
+pandas==1.4.4
+jinja2==2.11.3
+markupsafe==2.0.1
+itsdangerous==2.0.1
+werkzeug==0.16.1
+flask==1.1.2
+flask-cors==4.0.0
+pyhive==0.7.0
+thrift==0.16.0
+thrift-sasl==0.4.3
+hdfs==2.7.3

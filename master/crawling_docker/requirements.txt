@@ -1,0 +1,9 @@
+pandas ==2.0.3
+BeautifulSoup4 ==4.12.2
+tqdm ==4.66.1
+mysql-connector-python ==8.1.0
+kafka-python ==2.0.2
+confluent-kafka ==2.2.0
+requests ==2.31.0
+lxml ==4.9.3
+hdfs==2.7.3

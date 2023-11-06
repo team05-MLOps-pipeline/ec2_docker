@@ -1,0 +1,36 @@
+version:  '3.8'
+services:
+  app:
+      image: linuxserver/code-server:latest
+      restart: unless-stopped
+      hostname: codeserver
+      #shm_size: 16gb
+      #network_mode: "bridge"
+      networks:
+        - testNet
+      volumes:
+        - config:/config
+
+      environment:
+        - PUID=1000
+        - PGID=100
+        - TZ=Asia/Seoul
+        - PASSWORD=12341234!
+        - SUDO_PASSWORD=12341234!
+        #- PROXY_DOMAIN=code.shoracle.duckdns.org
+      ports:
+        - 8443:8443
+      #deploy:
+      #  resources:
+      #    limits:
+      #      memory: 22G
+            
+
+volumes:
+  config:
+  
+networks:
+  testNet:
+    external: true
+
+

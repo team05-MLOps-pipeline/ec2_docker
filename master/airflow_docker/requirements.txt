@@ -1,0 +1,10 @@
+wheel==0.41.2
+PyMySQL==1.1.0
+confluent_kafka==2.2.0
+happybase==1.2.0
+thriftpy2==0.4.17
+hdfs==2.7.3
+tqdm==4.66.1
+tensorflow==2.14.0
+transformers==4.34.1
+tensorflow_addons==0.22.0

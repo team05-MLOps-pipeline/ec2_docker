@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  crawling:
+          build: .
+          container_name: news_crawling
+          networks:
+              - testNet
+          restart: unless-stopped
+networks:
+ testNet:
+  external: true
+              
+

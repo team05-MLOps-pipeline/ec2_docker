@@ -1,0 +1,20 @@
+version:  '3.8'
+services:
+  app:
+      build: .
+      restart: unless-stopped
+      container_name: tick_to_min
+      environment:
+        - TZ= Asia/Seoul
+      networks:
+        - testNet
+          #      ports:
+          #        - 5000:5000
+            
+
+  
+networks:
+  testNet:
+    external: true
+
+

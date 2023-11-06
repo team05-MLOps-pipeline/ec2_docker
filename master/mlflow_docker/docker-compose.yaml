@@ -1,0 +1,22 @@
+version:  '3.8'
+services:
+  mlflow:
+      build: .
+      restart: unless-stopped
+      tty: true
+      user: 1000:1000
+      volumes:
+        - ./data:/usr/src/app/myapp
+      networks:
+        - testNet
+          #environment:
+          #  - TZ=Asia/Seoul
+      ports:
+        - 8448:5000
+      env_file:
+        - ./setting.env    
+            
+networks:
+  testNet:
+    external: true
+

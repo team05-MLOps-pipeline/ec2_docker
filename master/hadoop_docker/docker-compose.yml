@@ -1,0 +1,105 @@
+version: "3"
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    restart: unless-stopped
+    #network_mode: "host"
+    networks:
+      - testNet
+    ports:
+      - 9870:9870
+      - 9000:9000
+      - 8020:8020  
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    environment:
+      TZ: 'Asia/Seoul'     
+      CLUSTER_NAME: 'test'
+        #hostname: namenode
+    env_file:
+      - ./hadoop.env
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    restart: unless-stopped
+    #network_mode: "host"
+    networks:
+      - testNet
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    environment:
+      TZ: 'Asia/Seoul'      
+      SERVICE_PRECONDITION: "172.31.45.25:9870"
+    env_file:
+      - ./hadoop.env
+        #hostname: '43.201.197.216'
+    ports:
+      - 9864:9864
+      - 9866:9866
+  
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: resourcemanager
+    restart: unless-stopped
+    #network_mode: "host"
+    networks:
+      - testNet
+        #hostname: resourcemanager
+    ports:
+      - 8088:8088
+      - 8032:8032
+      - 8030:8030
+      - 8031:8031
+    environment:
+      TZ: 'Asia/Seoul'      
+      SERVICE_PRECONDITION: "172.31.45.25:9000 172.31.45.25:9870 172.31.45.25:9864 172.31.10.109:9864 172.31.15.3:9864"
+    env_file:
+      - ./hadoop.env
+
+  nodemanager1:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    container_name: nodemanager
+    restart: unless-stopped
+    #network_mode: "host"
+    networks:
+      - testNet
+        #hostname: nodemanager1
+    ports:
+      - 8042:8042
+    environment:
+      TZ: 'Asia/Seoul'      
+      SERVICE_PRECONDITION: "172.31.45.25:9000 172.31.45.25:9870 172.31.45.25:9864 172.31.10.109:9864 172.31.15.3:9864 172.31.45.25:8088"
+    env_file:
+      - ./hadoop.env
+  
+  historyserver:
+    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    container_name: historyserver
+    restart: unless-stopped
+    #network_mode: "host"
+    networks:
+      - testNet
+        #hostname: historyserver
+    ports:
+      - 8188:8188
+    environment:
+      TZ: 'Asia/Seoul'
+      SERVICE_PRECONDITION: "172.31.45.25:9000 172.31.45.25:9870 172.31.45.25:9864 172.31.10.109:9864 172.31.15.3:9864 172.31.45.25:8088"
+    volumes:
+      - hadoop_historyserver:/hadoop/yarn/timeline
+    env_file:
+      - ./hadoop.env
+
+
+networks:
+  testNet:
+    external: true
+
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  hadoop_historyserver:

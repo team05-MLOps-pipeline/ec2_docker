@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    networks:
+      - testNet    
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Seoul
+      - SERVERURL=jucha.duckdns.org #your server url
+      - SERVERPORT=51820
+      - PEERS=3
+      - PEERDNS=auto
+        #- INTERNAL_SUBNET=172.28.0.0
+      - ALLOWEDIPS=172.31.45.25/32, 172.31.10.109/32, 172.31.15.3/32, 172.23.0.0/16
+    volumes:
+      - ./config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+networks:          
+  testNet:
+    external: true

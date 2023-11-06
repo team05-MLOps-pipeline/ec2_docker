@@ -1,0 +1,41 @@
+version:  '3.8'
+services:
+
+
+  hive-server:
+    image: bde2020/hive:2.1.0-postgresql-metastore
+    container_name: hive-server
+    restart: unless-stopped
+    networks:
+      - testNet
+    env_file:
+      - ./hive.env
+    environment:
+      - "HIVE_CORE_CONF_javax_jdo_option_ConnectionURL=jdbc:postgresql://hive-metastore/metastore"
+    ports:
+      - "10000:10000"
+      - "10002:10002"
+  hive-metastore:
+    image: bde2020/hive:2.1.0-postgresql-metastore
+    container_name: hive-metastore
+    restart: unless-stopped
+    networks:
+      - testNet
+    env_file:
+      - ./hive.env
+    command: /opt/hive/bin/hive --service metastore
+  hive-metastore-postgresql:     
+    image: bde2020/hive-metastore-postgresql:2.1.0
+    restart: unless-stopped
+    networks:
+      - testNet   
+
+
+
+networks:          
+  testNet:
+    external: true
+
+    #volumes:
+    #  data:
+

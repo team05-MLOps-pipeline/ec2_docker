@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    restart: unless-stopped
+      #network_mode: "host"
+    networks:
+      - slave1Net
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    environment:
+      TZ: 'Asia/Seoul'
+      SERVICE_PRECONDITION: "172.31.45.25:9870"
+    env_file:
+      - ./hadoop.env
+        #hostname: '43.201.197.216'
+    ports:
+      - 9864:9864
+      - 9866:9866
+      - 8020:8020
+      - 50010:50010
+      - 50020:50020
+      - 50075:50075
+
+
+
+networks:
+  slave1Net:
+    external: true
+
+
+volumes:
+  hadoop_datanode:
